@@ -44,7 +44,7 @@ public class Player extends GameObject{
 		health = MAXHEALTH;
 		facingRight = true;
 		//instantiate projectile
-		projectile = new Projectile(new Sprite("assets/img/platforms/platform4.png"), new Vector2());
+		projectile = new Projectile(new Sprite("assets/img/platforms/platform4.png"), new Vector2(), this);
 		this.key = key;
 		this.mouse = mouse;
 		this.onGround = false;
@@ -160,8 +160,6 @@ public class Player extends GameObject{
 		/*if (projectile.isAirborne()){
 			projectile.Update(gameTime);
 		}
-<<<<<<< Updated upstream
-=======
 		//account for facing left, right
 		if (!facingRight && hasVision){
 			sword.Draw(
@@ -190,8 +188,7 @@ public class Player extends GameObject{
 				currentState = WALKING;
 			}
 			facingRight = true;
-			velocity = WALKSPEED;
-			currentState = WALKING;
+			velocity = velocity.add(WALKSPEED);
 		}
 	}
 	
@@ -201,8 +198,7 @@ public class Player extends GameObject{
 				currentState = WALKING;
 			}
 			facingRight = false;
-			velocity = WALKSPEED.multiply(-1);
-			currentState = WALKING;
+			velocity = velocity.add(WALKSPEED.multiply(-1));
 		}
 	}
 	
@@ -213,7 +209,7 @@ public class Player extends GameObject{
 	
 	private void jump() {
 		if (currentState != ATTACKING){
-			velocity = JUMPVECTOR;
+			velocity = velocity.add(JUMPVECTOR);
 			currentState = JUMPING;
 			//restart animations accordingly
 		}
@@ -250,8 +246,6 @@ public class Player extends GameObject{
 			}
 		} else if (go instanceof Platform){
 			
-			System.out.println(code);
-			
 			switch(code){
 			case GameRectangle.UP :
 				velocity = Vector2.Zero();
@@ -269,5 +263,6 @@ public class Player extends GameObject{
 	}
 	
 	public boolean hasVision(){ return hasVision; }
+	public boolean isAttacking(){ return currentState == ATTACKING; }
 	
 }

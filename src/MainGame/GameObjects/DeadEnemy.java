@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 
 import AppletSource.GameTime;
 import AppletSource.Utilities.GameObject;
-import AppletSource.Utilities.GameRectangle;
 import AppletSource.Utilities.Sprite;
 import AppletSource.Utilities.Vector2;
 
@@ -81,5 +80,16 @@ public class DeadEnemy extends GameObject{
 	public boolean isAttacking(){ return currentState == ATTACKING; }
 	
 	public void die(){ dead = true; }
+
+	@Override
+	public void collide(GameObject go){
+		int code = getRekt().intersects(go.getRekt());
+		if (code != -1 &&
+			go instanceof Player &&
+			((Player)go).hasVision() &&
+			((Player)go).isAttacking()){
+			takeDamage(1);
+		}
+	}
 	
 }

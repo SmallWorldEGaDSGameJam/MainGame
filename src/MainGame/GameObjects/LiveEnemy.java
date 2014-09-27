@@ -30,7 +30,7 @@ public class LiveEnemy extends GameObject{
 	
 	public LiveEnemy(Sprite sprite, Vector2 initialPos) {
 		super(sprite, initialPos);
-		projectile = new Projectile(sprite /*put real sprite later*/, initialPos);
+		projectile = new Projectile(sprite /*put real sprite later*/, initialPos, this);
 		health = MAXHEALTH;
 		numFramesPerShotElapsed = 0;
 		numFramesPerShotElapsed = 120; //2 seconds at 60fps
@@ -87,5 +87,13 @@ public class LiveEnemy extends GameObject{
 	public boolean isAttacking(){ return currentState == ATTACKING; }
 	
 	public void die(){ dead = true; }
+	
+	@Override
+	public void collide(GameObject go){
+		int code = getRekt().intersects(go.getRekt());
+		if (go instanceof Projectile && ((Projectile)go).getSource() instanceof Player){
+			takeDamage(1);
+		}
+	}
 	
 }

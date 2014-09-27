@@ -7,10 +7,13 @@ import AppletSource.Utilities.Vector2;
 
 public class Projectile extends GameObject{
 	
+	private GameObject source;
+	
 	private Vector2 destination;
 	
-	public Projectile(Sprite sprite, Vector2 initialPos) {
+	public Projectile(Sprite sprite, Vector2 initialPos, GameObject source) {
 		super(sprite, initialPos);
+		this.source = source;
 		destination = initialPos;
 	}
 
@@ -30,5 +33,7 @@ public class Projectile extends GameObject{
 	public boolean isAirborne(){
 		return !position.equals(destination);
 	}
+	
+	public GameObject getSource(){ return source; }
 	
 }
