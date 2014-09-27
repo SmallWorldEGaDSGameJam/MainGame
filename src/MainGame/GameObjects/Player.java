@@ -1,6 +1,7 @@
 package MainGame.GameObjects;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -41,7 +42,9 @@ public class Player extends GameObject{
 	private KeyboardState key;
 	private MouseState mouse;
 	
-	public Player(Sprite sprite, Vector2 initialPos, KeyboardState key, MouseState mouse) {
+	private Sprite walkAnim;
+	
+	public Player(Sprite sprite, Sprite walk, Vector2 initialPos, KeyboardState key, MouseState mouse) {
 		super(sprite, initialPos);
 		setAcceleration(GRAVITY);
 		health = MAXHEALTH;
@@ -52,10 +55,14 @@ public class Player extends GameObject{
 		this.key = key;
 		this.mouse = mouse;
 		this.onGround = false;
+		this.walkAnim = walk;
 	}
 	
 	public void Update(GameTime gameTime, ArrayList<Platform> platforms){
 		super.Update(gameTime);
+		
+		walkAnim.Update(gameTime);
+		
 		if (health > MAXHEALTH) health = MAXHEALTH;
 		if (health <= 0) {
 			if (currentState != DYING && !dead){
@@ -174,7 +181,10 @@ public class Player extends GameObject{
 	@Override
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos){
 		
-		super.Draw(g, gameTime, camPos);
+		if(currentState == WALKING)
+			walkAnim.Draw(g, gameTime, position.subtract(camPos), scale);
+		else
+			super.Draw(g, gameTime, camPos);
 		for (Projectile projectile : projectiles){
 			if (projectile.isAirborne()){
 				projectile.Draw(g, gameTime, camPos);

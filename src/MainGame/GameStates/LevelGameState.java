@@ -59,13 +59,15 @@ public class LevelGameState extends GameState {
 		super(mouse, key, camPos);
 		
 		level = new Level();
-		player = new Player(new Sprite("assets/img/player/Rob.png", new Point(10, 1), 100), new Vector2(0, 2000), key, mouse);
+		player = new Player(new Sprite("assets/img/player/Rob.png", new Point(10, 1), 100), 
+				new Sprite("assets/img/player/walk.png", new Point(11, 1), 20), new Vector2(0, 2000), key, mouse);
 		playSound("/assets/audio/music/background.wav");
 		background = new Sprite("assets/img/background/Background.png");
 	}
 
 	@Override
 	public void Update(GameTime gameTime) {
+		
 		level.Update(gameTime, player);
 		player.Update(gameTime, level.getPlatforms());
 		
