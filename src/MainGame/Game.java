@@ -1,6 +1,7 @@
 package MainGame;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 
 import AppletSource.AppletCore;
 import AppletSource.GameTime;
@@ -31,6 +32,9 @@ public class Game extends AppletCore {
 
 	@Override
 	public void Update(GameTime gameTime) {
+		if (key.isButtonTapped(KeyEvent.VK_P)){
+			menu.open();
+		}
 		if (menu.isOpen()){
 			menu.Update(gameTime);
 		} else {
