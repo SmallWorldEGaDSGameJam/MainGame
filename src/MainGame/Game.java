@@ -4,10 +4,9 @@ import java.awt.Graphics2D;
 
 import AppletSource.AppletCore;
 import AppletSource.GameTime;
-import AppletSource.Input.KeyboardState;
-import AppletSource.Input.MouseState;
 import AppletSource.Utilities.Vector2;
 import MainGame.GameStates.LevelGameState;
+import MainGame.GameStates.Menu;
 
 public class Game extends AppletCore {
 
@@ -15,7 +14,8 @@ public class Game extends AppletCore {
 	 * 
 	 */
 	private static final long serialVersionUID = 8927600578014031512L;
-	LevelGameState levelGameState;
+	private LevelGameState levelGameState;
+	private Menu menu;
 	
 	@Override
 	public void resizeScreen() {
@@ -26,13 +26,16 @@ public class Game extends AppletCore {
 	@Override
 	public void LoadContent() {
 		levelGameState = new LevelGameState(mouse, key, new Vector2(0, 3000 - 720));
-		
+		menu = new Menu(mouse, key, new Vector2(0, 3000 - 720));
 	}
 
 	@Override
 	public void Update(GameTime gameTime) {
-		levelGameState.Update(gameTime);
-		
+		if (menu.isOpen()){
+			menu.Update(gameTime);
+		} else {
+			levelGameState.Update(gameTime);
+		}
 	}
 	
 	@Override
@@ -41,8 +44,8 @@ public class Game extends AppletCore {
 		int w = getWidth(), h = getHeight();
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(Color.BLACK);
-		
 		levelGameState.Draw(gameTime, g);
+		menu.Draw(gameTime, g);
 	}
 
 }
