@@ -11,8 +11,4 @@ public class Platform extends GameObject {
 		super(sprite, initialPos);
 	}
 	
-	public GameRectangle getRectangle() {
-		return rect;
-	}
-	
 }

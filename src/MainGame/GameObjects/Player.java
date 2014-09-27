@@ -137,18 +137,14 @@ public class Player extends GameObject{
 	private void jumpUpdate(GameTime gameTime, ArrayList<Platform> platforms)
 	{
 		//I know! Wait for collision!
-		
+		groundStop(gameTime, platforms);
 	}
 	
 	
 	public void groundStop(GameTime gameTime, ArrayList<Platform> platforms) {
 		for(Platform p : platforms)
 		{
-			int collision = rect.intersects(p.getRectangle());
-			if(collision == GameRectangle.DOWN)
-			{
-				position.y = p.getPosition().y - getHeight();
-			}
+			collide(p);
 		}
 	}
 	
@@ -238,6 +234,7 @@ public class Player extends GameObject{
 	}
 	
 	public void collide(GameObject go){
+		GameRectangle rect = getRekt();
 		int code = rect.intersects(go.getRekt());
 		if (go instanceof Projectile && go != projectile){
 			takeDamage(1);
@@ -248,14 +245,18 @@ public class Player extends GameObject{
 				takeDamage(1);
 			}
 		} else if (go instanceof Platform){
+			
+			System.out.println(code);
+			
 			switch(code){
 			case GameRectangle.UP :
 				velocity = Vector2.Zero();
 				currentState = IDLE;
 				position = new Vector2(position.x, rect.getY() - getHeight());
 			case GameRectangle.DOWN :
-				velocity = new Vector2(velocity.x, velocity.y * -1.0 / 3.0);
-				position = new Vector2(position.x, rect.getY() + rect.getHeight());
+				velocity = Vector2.Zero();//new Vector2(velocity.x, velocity.y * -1.0 / 3.0);
+				//position = new Vector2(position.x, rect.getY() + rect.getHeight());
+				position = new Vector2(position.x, rect.getY() - getHeight());
 			case GameRectangle.RIGHT :
 				position = new Vector2(rect.getX() + rect.getWidth(), position.y);
 			case GameRectangle.LEFT :

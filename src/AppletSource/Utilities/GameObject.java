@@ -13,8 +13,6 @@ public class GameObject
 	
 	protected Sprite sprite;
 	
-	protected GameRectangle rect;
-	
 	protected int currentState;
 	
 	/**
@@ -30,7 +28,6 @@ public class GameObject
 		this.acceleration = Vector2.Zero();
 		this.scale = new Vector2(1, 1);
 		this.sprite = sprite;
-		this.rect = new GameRectangle(initialPos.x, initialPos.y, sprite.getWidth(), sprite.getHeight());
 	}
 	
 	public void Update(GameTime gameTime)
@@ -105,7 +102,7 @@ public class GameObject
 		this.acceleration = acceleration;
 	}
 	
-	public GameRectangle getRekt(){ return rect; }
+	public GameRectangle getRekt(){ return new GameRectangle(position.x, position.y, sprite.getWidth(), sprite.getHeight()); }
 	
 	public void collide(GameObject go){ /*classes need their own implementation*/ }
 }
