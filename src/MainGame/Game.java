@@ -19,13 +19,13 @@ public class Game extends AppletCore {
 	}
 
 	@Override
-	public void Update(GameTime arg0) {
+	public void Update(GameTime gameTime) {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	@Override
-	public void Draw(Graphics2D arg0, GameTime arg1) {
+	public void Draw(Graphics2D g, GameTime gameTime) {
 		// TODO Auto-generated method stub
 		
 	}
