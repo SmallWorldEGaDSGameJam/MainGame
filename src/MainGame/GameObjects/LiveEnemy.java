@@ -1,9 +1,11 @@
 package MainGame.GameObjects;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import AppletSource.GameTime;
 import AppletSource.Utilities.GameObject;
+import AppletSource.Utilities.GameRectangle;
 import AppletSource.Utilities.Sprite;
 import AppletSource.Utilities.Vector2;
 
@@ -14,6 +16,8 @@ public class LiveEnemy extends GameObject{
 	private static final int IDLE = 0,
 							ATTACKING = 1,
 							DYING = 2;
+	
+	private static final Vector2 WALKVEL = new Vector2(0.5, 0);
 	
 	private Projectile projectile;
 	
@@ -27,17 +31,20 @@ public class LiveEnemy extends GameObject{
 	
 	private boolean facingRight,
 					dead;
+	//Field of vision
+	double fov;
 	
-	public LiveEnemy(Sprite sprite, Vector2 initialPos) {
+	public LiveEnemy(Sprite sprite, Vector2 initialPos, double fov) {
 		super(sprite, initialPos);
 		projectile = new Projectile(new Sprite("assets/img/projectiles/test.png"), initialPos, this);
 		health = MAXHEALTH;
 		millPerShotElapsed = 0;
 		millPerShotWait = 2000;
+		this.fov = fov;
 		//instantiate visionSprites
 	}
 	
-	public void Update(GameTime gameTime, Player player){
+	public void Update(GameTime gameTime, Player player, ArrayList<Platform> platforms){
 		super.Update(gameTime);
 		
 		if (health > MAXHEALTH) health = MAXHEALTH;
@@ -51,6 +58,8 @@ public class LiveEnemy extends GameObject{
 		if (!dead){
 			Vector2 diff = position.subtract(player.getPosition()).normalize();
 			millPerShotElapsed += gameTime.getMillisecondsPerFrame();
+			
+			
 			
 			if (isAttacking() && millPerShotElapsed >= millPerShotWait){
 				projectile.setDestination(player.getPosition());
@@ -70,6 +79,11 @@ public class LiveEnemy extends GameObject{
 					currentState = IDLE;
 				}
 			}
+		}
+		
+		for(Platform p : platforms)
+		{
+			collide(p);
 		}
 	}
 	
@@ -93,7 +107,7 @@ public class LiveEnemy extends GameObject{
 	
 	@Override
 	public void collide(GameObject go){
-		int code = getRekt().intersects(go.getRekt());
+		int code = go.getRekt().intersects(getRekt());
 		if (go instanceof Projectile && ((Projectile)go).getSource() instanceof Player){
 			takeDamage(1);
 		}

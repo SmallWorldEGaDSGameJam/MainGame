@@ -1,6 +1,7 @@
 package MainGame.GameObjects;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import AppletSource.GameTime;
 import AppletSource.Utilities.Sprite;
@@ -19,13 +20,13 @@ public class Enemy{
 					playerHasVision;
 	
 	public Enemy(Sprite liveEnemySprite, Vector2 pos, Sprite deadEnemySprite){
-		liveEnemy = new LiveEnemy(liveEnemySprite, pos);
-		deadEnemy = new DeadEnemy(deadEnemySprite, pos);
+		liveEnemy = new LiveEnemy(liveEnemySprite, pos, 500);
+		deadEnemy = new DeadEnemy(deadEnemySprite, pos, 500);
 		millWait = 5000;
 		millCounter = 0;
 	}
 	
-	public void Update(GameTime gameTime, Player player){
+	public void Update(GameTime gameTime, Player player, ArrayList<Platform> platforms){
 		if (!isSuperDead){
 			if(millCounter < millWait)
 				millCounter += gameTime.getMillisecondsPerFrame();
@@ -36,7 +37,7 @@ public class Enemy{
 					isSuperDead = true;
 				}
 			} else {
-				liveEnemy.Update(gameTime, player);
+				liveEnemy.Update(gameTime, player, platforms);
 				if (liveEnemy.isDead()){
 					isDead = true;
 				}

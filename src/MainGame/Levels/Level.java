@@ -56,7 +56,7 @@ public class Level {
 			p.Update(gameTime);
 		
 		for(Enemy e : enemy)
-			e.Update(gameTime, player);
+			e.Update(gameTime, player, platforms);
 	}
 	
 	public void Draw(GameTime gameTime, Graphics2D g, Vector2 camPos)
