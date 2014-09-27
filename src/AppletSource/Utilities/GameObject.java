@@ -34,6 +34,8 @@ public class GameObject
 	{
 		velocity = velocity.add(acceleration.multiply(gameTime.getMillisecondsPerFrame()));
 		position = position.add(velocity.multiply(gameTime.getMillisecondsPerFrame()));
+		
+		sprite.Update(gameTime);
 	}
 	
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos)

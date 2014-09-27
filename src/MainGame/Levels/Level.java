@@ -36,11 +36,11 @@ public class Level {
 		platforms.add(new Platform(new Sprite("assets/img/platforms/ground.png"), new Vector2(0, 2970)));
 		
 		enemy = new ArrayList<Enemy>();
-		enemy.add(new Enemy(new Sprite("assets/img/enemies/enemy1.png"), new Vector2(2000, 2790), new Sprite("assets/img/enemies/enemy1.png")));
-		enemy.add(new Enemy(new Sprite("assets/img/enemies/enemy1.png"), new Vector2(4250, 2790), new Sprite("assets/img/enemies/enemy1.png")));
-		enemy.add(new Enemy(new Sprite("assets/img/enemies/enemy1.png"), new Vector2(6250, 1020), new Sprite("assets/img/enemies/enemy1.png")));
-		enemy.add(new Enemy(new Sprite("assets/img/enemies/enemy1.png"), new Vector2(5000, 1320), new Sprite("assets/img/enemies/enemy1.png")));
-		enemy.add(new Enemy(new Sprite("assets/img/enemies/enemy1.png"), new Vector2(1650, 1620), new Sprite("assets/img/enemies/enemy1.png")));
+		enemy.add(new Enemy(new Sprite("assets/img/enemies/Enemy.png"), new Vector2(2000, 2790), new Sprite("assets/img/enemies/Enemy.png")));
+		enemy.add(new Enemy(new Sprite("assets/img/enemies/Enemy.png"), new Vector2(4250, 2790), new Sprite("assets/img/enemies/Enemy.png")));
+		enemy.add(new Enemy(new Sprite("assets/img/enemies/Enemy.png"), new Vector2(6250, 1020), new Sprite("assets/img/enemies/Enemy.png")));
+		enemy.add(new Enemy(new Sprite("assets/img/enemies/Enemy.png"), new Vector2(5000, 1320), new Sprite("assets/img/enemies/Enemy.png")));
+		enemy.add(new Enemy(new Sprite("assets/img/enemies/Enemy.png"), new Vector2(1650, 1620), new Sprite("assets/img/enemies/Enemy.png")));
 		spawn = new Vector2();
 	}
 	

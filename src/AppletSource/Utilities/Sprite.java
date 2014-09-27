@@ -37,6 +37,7 @@ public class Sprite {
 		
 		if(MillisecondsSinceLastFrame >= MillisecondsPerFrame)
 		{
+			MillisecondsSinceLastFrame = 0;
 			currentFrame.x++;
 			if(currentFrame.x >= frameNumbers.x)
 			{
@@ -69,6 +70,6 @@ public class Sprite {
 				(int)(frameSize.y * currentFrame.y + frameSize.y), null);
 	}
 	
-	public int getWidth() { return image.getWidth(null); }
-	public int getHeight() { return image.getHeight(null); }
+	public int getWidth() { return (int) frameSize.x; }
+	public int getHeight() { return (int) frameSize.y; }
 }
