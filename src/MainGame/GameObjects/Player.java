@@ -145,9 +145,9 @@ public class Player extends GameObject{
 	
 	
 	public void groundStop(GameTime gameTime, ArrayList<Platform> platforms) {
+		onGround = false;
 		for(Platform p : platforms)
 		{
-			onGround = false;
 			collide(p);
 		}
 	}
@@ -157,6 +157,8 @@ public class Player extends GameObject{
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos){
 		
 		super.Draw(g, gameTime, camPos);
+		
+		g.drawString("velocity: " + velocity, 20, 20);
 		/*if (projectile.isAirborne()){
 			projectile.Update(gameTime);
 		}
@@ -188,7 +190,7 @@ public class Player extends GameObject{
 				currentState = WALKING;
 			}
 			facingRight = true;
-			velocity = velocity.add(WALKSPEED);
+			velocity.x = WALKSPEED.x;
 		}
 	}
 	
@@ -198,7 +200,7 @@ public class Player extends GameObject{
 				currentState = WALKING;
 			}
 			facingRight = false;
-			velocity = velocity.add(WALKSPEED.multiply(-1));
+			velocity.x = WALKSPEED.multiply(-1).x;
 		}
 	}
 	
@@ -236,6 +238,7 @@ public class Player extends GameObject{
 	public void collide(GameObject go){
 		GameRectangle rect = getRekt();
 		int code = go.getRekt().intersects(rect);
+		//TODO: Check logic of these ifs (they don't actually use code)
 		if (go instanceof Projectile && go != projectile){
 			takeDamage(1);
 		} else if (go instanceof DeadEnemy && ((DeadEnemy)go).isAttacking()){
@@ -247,17 +250,25 @@ public class Player extends GameObject{
 		} else if (go instanceof Platform){
 			
 			switch(code){
-			case GameRectangle.UP :
+			case GameRectangle.UP:
 				velocity = Vector2.Zero();
 				position = new Vector2(position.x, go.getY() - getHeight());
 				onGround = true;
 				currentState = IDLE;
-			case GameRectangle.DOWN :
-				
-			case GameRectangle.RIGHT :
-				
-			case GameRectangle.LEFT :
-				
+				break;
+			case GameRectangle.DOWN:
+				position.y = go.getY() + go.getHeight();
+				if(velocity.y < 0)
+					velocity.y *= -1/3;
+				break;
+			case GameRectangle.RIGHT:
+				position.x = go.getX() + go.getWidth();
+				//velocity.x = 0;
+				break;
+			case GameRectangle.LEFT:
+				position.x = go.getX() - getWidth();
+				//velocity.x = 0;
+				break;
 			}
 		}
 	}

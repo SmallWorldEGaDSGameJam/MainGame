@@ -37,7 +37,7 @@ public class Game extends AppletCore {
 	
 	@Override
 	public void Draw(Graphics2D g, GameTime gameTime) {
-		g.setColor(Color.BLUE);
+		g.setColor(new Color(100, 149, 237));
 		int w = getWidth(), h = getHeight();
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(Color.BLACK);

@@ -1,7 +1,6 @@
 package MainGame.Levels;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.util.ArrayList;
 
 import AppletSource.GameTime;
@@ -16,7 +15,7 @@ public class Level {
 	public Level()
 	{
 		platforms = new ArrayList<Platform>();
-		/*platforms.add(new Platform(new Sprite("assets/img/platforms/platform1.png"), new Vector2(750, 1400)));
+		platforms.add(new Platform(new Sprite("assets/img/platforms/platform1.png"), new Vector2(750, 1400)));
 		platforms.add(new Platform(new Sprite("assets/img/platforms/platform1.png"), new Vector2(2250, 1600)));
 		platforms.add(new Platform(new Sprite("assets/img/platforms/platform1.png"), new Vector2(5250, 1300)));
 		platforms.add(new Platform(new Sprite("assets/img/platforms/platform1.png"), new Vector2(2250, 2000)));
@@ -28,8 +27,8 @@ public class Level {
 		platforms.add(new Platform(new Sprite("assets/img/platforms/platform3.png"), new Vector2(6250, 1200)));
 		platforms.add(new Platform(new Sprite("assets/img/platforms/platform3.png"), new Vector2(1500, 1800)));
 		platforms.add(new Platform(new Sprite("assets/img/platforms/platform4.png"), new Vector2(5000, 1500)));
-		platforms.add(new Platform(new Sprite("assets/img/platforms/platform4.png"), new Vector2(6750, 1000)));*/
-		platforms.add(new Platform(new Sprite("assets/img/platforms/ground.png"), new Vector2(0, 3000 - 30)));
+		platforms.add(new Platform(new Sprite("assets/img/platforms/platform4.png"), new Vector2(6750, 1000)));
+		platforms.add(new Platform(new Sprite("assets/img/platforms/ground.png"), new Vector2(0, 2970)));
 		spawn = new Vector2();
 	}
 	
