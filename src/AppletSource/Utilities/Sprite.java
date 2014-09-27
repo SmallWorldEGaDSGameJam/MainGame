@@ -26,6 +26,11 @@ public class Sprite {
 		this.MillisecondsPerFrame = MillisecondsPerFrame;
 	}
 	
+	public Sprite(String file)
+	{
+		this(file, new Point(1, 1), 0);
+	}
+	
 	public void Update(GameTime gameTime)
 	{
 		MillisecondsSinceLastFrame+= gameTime.getMillisecondsPerFrame();
