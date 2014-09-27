@@ -36,10 +36,10 @@ public class Projectile extends GameObject{
 		position = source;
 		if (facingRight){
 			destination = new Vector2(source.x + 100, source.y);
-			velocity = destination.subtract(source).normalize().multiply(5);
+			velocity = destination.subtract(source).normalize().multiply(3);
 		} else {
 			destination = new Vector2(source.x - 100, source.y);
-			velocity = destination.subtract(source).normalize();
+			velocity = destination.subtract(source).normalize().multiply(3);
 		}
 	}
 	
