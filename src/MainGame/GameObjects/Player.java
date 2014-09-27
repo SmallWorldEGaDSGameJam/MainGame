@@ -36,7 +36,6 @@ public class Player extends GameObject{
 	private boolean facingRight,
 					hasVision,
 					dead;
-	private int currentState;
 	
 	private KeyboardState key;
 	private MouseState mouse;

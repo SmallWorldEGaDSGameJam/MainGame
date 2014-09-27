@@ -12,6 +12,10 @@ public class LiveEnemy extends GameObject{
 
 	private static final int MAXHEALTH = 10;
 	
+	private static final int IDLE = 0,
+							ATTACKING = 1,
+							DYING = 2;
+	
 	private int health;
 	
 	private GameRectangle hitbox;
@@ -28,7 +32,7 @@ public class LiveEnemy extends GameObject{
 		//instantiate visionSprites
 	}
 	
-	public void Update(GameTime gameTime, boolean playerHasVision){
+	public void Update(GameTime gameTime, Player player){
 		super.Update(gameTime);
 		if (health > MAXHEALTH) health = MAXHEALTH;
 		if (health <= 0) {
@@ -36,6 +40,16 @@ public class LiveEnemy extends GameObject{
 				//dead person stuff
 			} else {
 				die();
+			}
+		}
+		if (!dead){
+			Vector2 diff = position.subtract(player.getPosition()).normalize();
+			double distance = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
+			double ratio = Math.abs(diff.y / diff.x);
+			if (ratio > 1 && distance < 1000 /*value subject to change*/){
+				currentState = ATTACKING;
+			} else {
+				currentState = IDLE;
 			}
 		}
 	}

@@ -10,7 +10,12 @@ import AppletSource.Utilities.Vector2;
 
 public class DeadEnemy extends GameObject{
 	
-private static final int MAXHEALTH = 10;
+	private static final int MAXHEALTH = 10;
+	
+	private static final int IDLE = 0,
+							MOVING = 1,
+							ATTACKING = 2,
+							DYING = 3;
 	
 	private int health;
 	
@@ -28,14 +33,22 @@ private static final int MAXHEALTH = 10;
 		//instantiate sword
 	}
 	
-	public void Update(GameTime gameTime, boolean playerHasVision){
-		super.Update(gameTime);
+	public void Update(GameTime gameTime, Player player){
 		if (health > MAXHEALTH) health = MAXHEALTH;
 		if (health <= 0) {
 			if (dead){
 				//dead person stuff
 			} else {
 				die();
+			}
+		}
+		if (!dead){
+			Vector2 diff = position.subtract(player.getPosition()).normalize();
+			double distance = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
+			if (distance < 100 /*value subject to change */ && diff.y == 0){
+				currentState = ATTACKING;
+			} else {
+				position.add(diff);
 			}
 		}
 	}

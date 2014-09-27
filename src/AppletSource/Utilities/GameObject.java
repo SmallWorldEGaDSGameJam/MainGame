@@ -1,8 +1,6 @@
 package AppletSource.Utilities;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
-
 import AppletSource.GameTime;
 
 public class GameObject
@@ -13,6 +11,8 @@ public class GameObject
 	protected Vector2 acceleration;
 	
 	protected Sprite sprite;
+	
+	protected int currentState;
 	
 	/**
 	 * Main constructor for the GameObject class.
