@@ -14,9 +14,9 @@ import AppletSource.Utilities.Vector2;
 
 public class Player extends GameObject{
 
-	private static final Vector2 WALKSPEED = new Vector2(5.0, 0);
-	private static final Vector2 JUMPVECTOR = new Vector2(0, -10.0);
-	private static final Vector2 GRAVITY = new Vector2(0, 0.001);
+	private static final Vector2 WALKSPEED = new Vector2(1.0, 0);
+	private static final Vector2 JUMPVECTOR = new Vector2(0, -1.0);
+	private static final Vector2 GRAVITY = new Vector2(0, 0.002);
 	
 	private static final int MAXHEALTH = 10;
 	
@@ -32,7 +32,8 @@ public class Player extends GameObject{
 	
 	private boolean facingRight,
 					hasVision,
-					dead;
+					dead,
+					onGround;
 	
 	private KeyboardState key;
 	private MouseState mouse;
@@ -46,6 +47,7 @@ public class Player extends GameObject{
 		projectile = new Projectile(new Sprite("assets/img/platforms/platform4.png"), new Vector2());
 		this.key = key;
 		this.mouse = mouse;
+		this.onGround = false;
 	}
 	
 	public void Update(GameTime gameTime, ArrayList<Platform> platforms){
@@ -144,6 +146,7 @@ public class Player extends GameObject{
 	public void groundStop(GameTime gameTime, ArrayList<Platform> platforms) {
 		for(Platform p : platforms)
 		{
+			onGround = false;
 			collide(p);
 		}
 	}
@@ -210,7 +213,7 @@ public class Player extends GameObject{
 	private void jump() {
 		if (currentState != ATTACKING){
 			velocity = JUMPVECTOR;
-			currentState = WALKING;
+			currentState = JUMPING;
 			//restart animations accordingly
 		}
 	}
@@ -235,7 +238,7 @@ public class Player extends GameObject{
 	
 	public void collide(GameObject go){
 		GameRectangle rect = getRekt();
-		int code = rect.intersects(go.getRekt());
+		int code = go.getRekt().intersects(rect);
 		if (go instanceof Projectile && go != projectile){
 			takeDamage(1);
 		} else if (go instanceof DeadEnemy && ((DeadEnemy)go).isAttacking()){
@@ -251,16 +254,15 @@ public class Player extends GameObject{
 			switch(code){
 			case GameRectangle.UP :
 				velocity = Vector2.Zero();
+				position = new Vector2(position.x, go.getY() - getHeight());
+				onGround = true;
 				currentState = IDLE;
-				position = new Vector2(position.x, rect.getY() - getHeight());
 			case GameRectangle.DOWN :
-				velocity = Vector2.Zero();//new Vector2(velocity.x, velocity.y * -1.0 / 3.0);
-				//position = new Vector2(position.x, rect.getY() + rect.getHeight());
-				position = new Vector2(position.x, rect.getY() - getHeight());
+				
 			case GameRectangle.RIGHT :
-				position = new Vector2(rect.getX() + rect.getWidth(), position.y);
+				
 			case GameRectangle.LEFT :
-				position = new Vector2(rect.getX() - getWidth(), position.y);
+				
 			}
 		}
 	}
@@ -268,10 +270,3 @@ public class Player extends GameObject{
 	public boolean hasVision(){ return hasVision; }
 	
 }
-
-
-
-
-
-
-
