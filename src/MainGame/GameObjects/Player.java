@@ -85,11 +85,19 @@ public class Player extends GameObject{
 	@Override
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos){
 		super.Draw(g, gameTime, camPos);
-		if (facingRight){
+		//account for facing left, right
+		if (!facingRight){
 			sword.Draw(
 					g, 
 					gameTime, 
 					position.subtract(new Vector2(sword.getWidth(), 0)).subtract(camPos), 
+					scale
+					);
+		} else {
+			sword.Draw(
+					g, 
+					gameTime, 
+					position.add(new Vector2(sprite.getWidth(), 0)).subtract(camPos), 
 					scale
 					);
 		}
@@ -122,4 +130,7 @@ public class Player extends GameObject{
 			getVelocity().add(JUMPVECTOR);
 		}
 	}
+	
+	public boolean hasVision(){ return hasVision; }
+	
 }
