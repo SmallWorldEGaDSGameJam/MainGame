@@ -4,17 +4,18 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 
+import AppletSource.AppletCore;
 import AppletSource.GameTime;
 
 public class GameObject
 {
 	protected Point size;
-	protected Point scale;
+	protected Vector2 scale;
 	protected Vector2 position;
 	protected Vector2 velocity;
 	protected Vector2 acceleration;
 	
-	protected Image image;
+	protected Sprite sprite;
 	
 	/**
 	 * Main constructor for the GameObject class.
@@ -22,14 +23,14 @@ public class GameObject
 	 * @param initialPos The starting position that can change with the acceleration and velocity.
 	 * @param imageSize The fixed scale of the image.
 	 */
-	public GameObject(Image image, Vector2 initialPos)
+	public GameObject(Sprite sprite, Vector2 initialPos)
 	{
 		this.position = initialPos;
 		this.velocity = Vector2.Zero();
 		this.acceleration = Vector2.Zero();
-		this.size =  new Point(image.getWidth(null), image.getHeight(null));
-		this.scale = new Point(1, 1);
-		this.image = image;
+		this.scale = new Vector2(1, 1);
+		this.sprite = sprite;
+		
 	}
 	
 	public void Update(GameTime gameTime)
@@ -40,21 +41,20 @@ public class GameObject
 	
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos)
 	{
-		g.drawImage(image, (int)(position.x - camPos.x), (int)(position.y - camPos.y),
-				size.x * scale.x, size.y * scale.y, null);
+		sprite.Draw(g, gameTime, position.substract(camPos), scale);
 	}
 
 	/**
 	 * @return the scale
 	 */
-	public Point getScale() {
+	public Vector2 getScale() {
 		return scale;
 	}
 
 	/**
 	 * @param scale the scale to set
 	 */
-	public void setScale(Point scale) {
+	public void setScale(Vector2 scale) {
 		this.scale = scale;
 	}
 

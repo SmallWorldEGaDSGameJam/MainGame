@@ -5,18 +5,16 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 
 import AppletSource.GameTime;
-import AppletSource.Utilities.AnimatedGameObject;
+import AppletSource.Utilities.GameObject;
+import AppletSource.Utilities.Sprite;
 import AppletSource.Utilities.Vector2;
 
-public class Player extends AnimatedGameObject{
+public class Player extends GameObject{
 
 	private static final Vector2 WALKSPEED = new Vector2(5.0, 0);
 	private static final Vector2 JUMPVECTOR = new Vector2(0, -10.0);
 	private static final Vector2 GRAVITY = new Vector2(0, 10.0);
 	
-	private static final Point FRAMENUMS = new Point(0, 0);
-	
-	private static final int MSPERFRAMES = 17;
 	private static int MAXHEALTH = 10;
 	
 	private static int IDLE = 0,
@@ -32,8 +30,8 @@ public class Player extends AnimatedGameObject{
 					dead;
 	private int currentState;
 	
-	public Player(Image image, Vector2 initialPos) {
-		super(image, initialPos, FRAMENUMS, MSPERFRAMES);
+	public Player(Sprite sprite, Vector2 initialPos) {
+		super(sprite, initialPos);
 		setAcceleration(GRAVITY);
 		health = MAXHEALTH;
 		facingRight = true;
