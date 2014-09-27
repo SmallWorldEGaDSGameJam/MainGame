@@ -133,6 +133,7 @@ public class Player extends GameObject{
 
 	private void attackUpdate(GameTime gameTime, ArrayList<Platform> platforms)
 	{
+		groundStop(gameTime, platforms);
 		//Ehm... Wait I guess?
 	}
 
