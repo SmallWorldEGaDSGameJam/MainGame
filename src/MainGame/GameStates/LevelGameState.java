@@ -1,6 +1,15 @@
 package MainGame.GameStates;
 
 import java.awt.Graphics2D;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.LineEvent.Type;
 
 import AppletSource.GameTime;
 import AppletSource.Input.KeyboardState;
@@ -11,8 +20,32 @@ import AppletSource.Utilities.Vector2;
 import MainGame.GameObjects.Player;
 import MainGame.Levels.Level;
 
-public class LevelGameState extends GameState {
+class AudioListener implements LineListener{
+
+	private boolean done = false;
 	
+	@Override
+	public void update(LineEvent event) {
+		Type eventType = event.getType();
+		if (eventType == Type.STOP || eventType == Type.CLOSE){
+			done = true;
+			notifyAll();
+		}
+	}
+	
+	public synchronized void waitUntilDone() throws InterruptedException {
+		while(!done){
+			wait();
+		}
+	}
+	
+}
+
+public class LevelGameState extends GameState {
+
+	private static Thread sound;
+	private static Clip clip;
+		
 	Level level;
 	Player player;
 	
@@ -21,6 +54,7 @@ public class LevelGameState extends GameState {
 		
 		level = new Level();
 		player = new Player(new Sprite("assets/img/player/player.png"), new Vector2(0, 2000), key, mouse);
+		playSound("/assets/audio/music/background.wav");
 	}
 
 	@Override
@@ -37,4 +71,32 @@ public class LevelGameState extends GameState {
 		player.Draw(g, gameTime, camPos);
 	}
 
+	public static synchronized void playSound(final String string) {
+		  sound = new Thread(new Runnable() {
+		  // The wrapper thread is unnecessary, unless it blocks on the
+		  // Clip finishing; see comments.
+		    public void run() {
+		      try {
+		    	  InputStream audioSrc = getClass().getResourceAsStream(string);
+		    	  BufferedInputStream inputStream = new BufferedInputStream(audioSrc);
+		    	  AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
+
+		    	  AudioListener listener = new AudioListener();
+
+		    	  clip = AudioSystem.getClip();
+		    	  clip.addLineListener(listener);
+		    	  clip.open(audioInputStream);
+		    	  clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+		    	  clip.start();
+
+		      } catch (Exception e) {
+		    	  e.printStackTrace();
+		      }
+		    }
+		  });
+		  sound.start();
+	}
+
+	
 }
