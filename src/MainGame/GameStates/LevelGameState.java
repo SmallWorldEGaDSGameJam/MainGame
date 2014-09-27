@@ -1,7 +1,6 @@
 package MainGame.GameStates;
 
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 
 import AppletSource.GameTime;
 import AppletSource.Input.KeyboardState;
@@ -26,7 +25,7 @@ public class LevelGameState extends GameState {
 
 	@Override
 	public void Update(GameTime gameTime) {
-		level.Update(gameTime);
+		level.Update(gameTime, player);
 		player.Update(gameTime, level.getPlatforms());
 		
 		camPos = new Vector2(player.getX() - 1080/2, player.getY() - 720/2);

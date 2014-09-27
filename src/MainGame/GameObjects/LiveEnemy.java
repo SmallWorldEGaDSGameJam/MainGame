@@ -20,8 +20,8 @@ public class LiveEnemy extends GameObject{
 	private int health;
 	
 	//how long to wait in between each shot while active.
-	private int numFramesPerShotWait, 
-				numFramesPerShotElapsed;
+	private int millPerShotWait, 
+				millPerShotElapsed;
 	
 	private Sprite visionSprite;
 	
@@ -30,15 +30,16 @@ public class LiveEnemy extends GameObject{
 	
 	public LiveEnemy(Sprite sprite, Vector2 initialPos) {
 		super(sprite, initialPos);
-		projectile = new Projectile(sprite /*put real sprite later*/, initialPos, this);
+		projectile = new Projectile(new Sprite("assets/img/projectiles/test.png"), initialPos, this);
 		health = MAXHEALTH;
-		numFramesPerShotElapsed = 0;
-		numFramesPerShotElapsed = 120; //2 seconds at 60fps
+		millPerShotElapsed = 0;
+		millPerShotWait = 2000;
 		//instantiate visionSprites
 	}
 	
 	public void Update(GameTime gameTime, Player player){
 		super.Update(gameTime);
+		
 		if (health > MAXHEALTH) health = MAXHEALTH;
 		if (health <= 0) {
 			if (dead){
@@ -49,9 +50,11 @@ public class LiveEnemy extends GameObject{
 		}
 		if (!dead){
 			Vector2 diff = position.subtract(player.getPosition()).normalize();
-			if (isAttacking() && numFramesPerShotElapsed++ == numFramesPerShotWait){
+			millPerShotElapsed += gameTime.getMillisecondsPerFrame();
+			
+			if (isAttacking() && millPerShotElapsed >= millPerShotWait){
 				projectile.setDestination(player.getPosition());
-				numFramesPerShotElapsed = 0;
+				millPerShotElapsed = 0;
 				currentState = IDLE; //reset to idle to reevaluate if you can fire a shot again
 			} else {
 				double distance = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
@@ -62,7 +65,7 @@ public class LiveEnemy extends GameObject{
 				}
 				if (ratio > 1 && distance < 1000 /*value subject to change*/){
 					currentState = ATTACKING;
-					numFramesPerShotElapsed = 0;
+					millPerShotElapsed = 0;
 				} else {
 					currentState = IDLE;
 				}
@@ -74,7 +77,7 @@ public class LiveEnemy extends GameObject{
 		if (playerHasVision){
 			visionSprite.Draw(g, gameTime, position, camPos);
 		} else {
-			sprite.Draw(g, gameTime, position, camPos);
+			super.Draw(g, gameTime, camPos);
 		}
 		if (projectile.isAirborne()){
 			projectile.Update(gameTime);
