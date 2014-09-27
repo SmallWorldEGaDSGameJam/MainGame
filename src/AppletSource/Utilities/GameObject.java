@@ -104,4 +104,8 @@ public class GameObject
 	public void setAcceleration(Vector2 acceleration) {
 		this.acceleration = acceleration;
 	}
+	
+	public GameRectangle getRekt(){ return rect; }
+	
+	public void collide(GameObject go){ /*classes need their own implementation*/ }
 }

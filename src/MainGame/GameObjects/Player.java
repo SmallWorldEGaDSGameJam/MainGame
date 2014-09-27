@@ -157,9 +157,27 @@ public class Player extends GameObject{
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos){
 		
 		super.Draw(g, gameTime, camPos);
-		if (projectile.isAirborne()){
+		/*if (projectile.isAirborne()){
 			projectile.Update(gameTime);
 		}
+<<<<<<< Updated upstream
+=======
+		//account for facing left, right
+		if (!facingRight && hasVision){
+			sword.Draw(
+					g, 
+					gameTime, 
+					position.subtract(new Vector2(sword.getWidth(), 0)).subtract(camPos), 
+					scale
+					);
+		} else {
+			sword.Draw(
+					g, 
+					gameTime, 
+					position.add(new Vector2(sprite.getWidth(), 0)).subtract(camPos), 
+					scale
+					);
+		}*/
 	}
 	
 	public void takeDamage(int damage){
@@ -168,6 +186,9 @@ public class Player extends GameObject{
 	
 	private void turnRight(){
 		if (currentState != ATTACKING){
+			if (currentState != JUMPING){
+				currentState = WALKING;
+			}
 			facingRight = true;
 			velocity = WALKSPEED;
 			currentState = WALKING;
@@ -176,6 +197,9 @@ public class Player extends GameObject{
 	
 	private void turnLeft(){
 		if (currentState != ATTACKING){
+			if (currentState != JUMPING){
+				currentState = WALKING;
+			}
 			facingRight = false;
 			velocity = WALKSPEED.multiply(-1);
 			currentState = WALKING;
@@ -210,6 +234,33 @@ public class Player extends GameObject{
 			currentState = ATTACKING;
 			//restart animations accordingly
 			//start projectile/sword/whatever
+		}
+	}
+	
+	public void collide(GameObject go){
+		int code = rect.intersects(go.getRekt());
+		if (go instanceof Projectile && go != projectile){
+			takeDamage(1);
+		} else if (go instanceof DeadEnemy && ((DeadEnemy)go).isAttacking()){
+			if (hasVision){
+				takeDamage(2);
+			} else {
+				takeDamage(1);
+			}
+		} else if (go instanceof Platform){
+			switch(code){
+			case GameRectangle.UP :
+				velocity = Vector2.Zero();
+				currentState = IDLE;
+				position = new Vector2(position.x, rect.getY() - getHeight());
+			case GameRectangle.DOWN :
+				velocity = new Vector2(velocity.x, velocity.y * -1.0 / 3.0);
+				position = new Vector2(position.x, rect.getY() + rect.getHeight());
+			case GameRectangle.RIGHT :
+				position = new Vector2(rect.getX() + rect.getWidth(), position.y);
+			case GameRectangle.LEFT :
+				position = new Vector2(rect.getX() - getWidth(), position.y);
+			}
 		}
 	}
 	
