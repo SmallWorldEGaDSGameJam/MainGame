@@ -17,6 +17,12 @@ public class Level {
 		spawn = new Vector2();
 	}
 	
+	public Level(ArrayList<Platform> platforms, Vector2 spawn)
+	{
+		this.platforms = platforms;
+		this.spawn = spawn;
+	}
+	
 	public void Update(GameTime gameTime)
 	{
 		for(Platform p : platforms)
