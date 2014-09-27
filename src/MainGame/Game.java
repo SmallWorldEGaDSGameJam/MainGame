@@ -1,4 +1,5 @@
 package MainGame;
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import AppletSource.AppletCore;
@@ -24,7 +25,7 @@ public class Game extends AppletCore {
 
 	@Override
 	public void LoadContent() {
-		levelGameState = new LevelGameState(mouse, key, new Vector2(0, 0));
+		levelGameState = new LevelGameState(mouse, key, new Vector2(0, 3000 - 720));
 		
 	}
 
@@ -36,6 +37,11 @@ public class Game extends AppletCore {
 	
 	@Override
 	public void Draw(Graphics2D g, GameTime gameTime) {
+		g.setColor(Color.BLUE);
+		int w = getWidth(), h = getHeight();
+		g.fillRect(0, 0, getWidth(), getHeight());
+		g.setColor(Color.BLACK);
+		
 		levelGameState.Draw(gameTime, g);
 	}
 

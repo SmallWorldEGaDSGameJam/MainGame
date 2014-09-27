@@ -43,7 +43,7 @@ public class Player extends GameObject{
 	
 	public Player(Sprite sprite, Vector2 initialPos, KeyboardState key, MouseState mouse) {
 		super(sprite, initialPos);
-		setAcceleration(GRAVITY);
+		//setAcceleration(GRAVITY);
 		hitbox = new GameRectangle(getX(), getY(), getWidth(), getHeight());
 		health = MAXHEALTH;
 		facingRight = true;
@@ -86,7 +86,7 @@ public class Player extends GameObject{
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos){
 		super.Draw(g, gameTime, camPos);
 		//account for facing left, right
-		if (!facingRight){
+		/*if (!facingRight){
 			sword.Draw(
 					g, 
 					gameTime, 
@@ -100,7 +100,7 @@ public class Player extends GameObject{
 					position.add(new Vector2(sprite.getWidth(), 0)).subtract(camPos), 
 					scale
 					);
-		}
+		}*/
 	}
 	
 	public void takeDamage(int damage){
