@@ -21,7 +21,7 @@ public class LevelGameState extends GameState {
 		super(mouse, key, camPos);
 		
 		level = new Level();
-		player = new Player(new Sprite("assets/img/player/player.png"), new Vector2(0, 2820), key, mouse);
+		player = new Player(new Sprite("assets/img/player/player.png"), new Vector2(0, 2000), key, mouse);
 	}
 
 	@Override
@@ -47,8 +47,7 @@ public class LevelGameState extends GameState {
 				camPos.y += 3;
 		}
 		
-		
-		player.Update(gameTime);
+		player.Update(gameTime, level.getPlatforms());
 	}
 
 	@Override

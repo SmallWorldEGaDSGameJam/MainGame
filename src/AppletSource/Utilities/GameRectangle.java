@@ -75,4 +75,9 @@ public class GameRectangle {
 		}
         return -1;
 	}
+	
+	public String toString()
+	{
+		return "{" + position.x + ", " + position.y + ", " + dimensions.x + ", " + dimensions.y + "}";
+	}
 }
