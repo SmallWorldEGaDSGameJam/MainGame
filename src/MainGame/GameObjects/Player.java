@@ -18,7 +18,7 @@ public class Player extends GameObject{
 	private static final Vector2 JUMPVECTOR = new Vector2(0, -1.0);
 	private static final Vector2 GRAVITY = new Vector2(0, 0.002);
 	
-	private static final int MAXHEALTH = 10;
+	private static final int MAXHEALTH = 4;
 	
 	private static final int IDLE = 0,
 					         WALKING = 1,
@@ -26,9 +26,12 @@ public class Player extends GameObject{
 					         ATTACKING = 3,
 					         DYING = 4;
 	
-	private Projectile projectile;
+	private ArrayList<Projectile> projectiles;
 	
 	private int health;
+
+	private int numFramesToFire,
+				numFramesElapsed;
 	
 	private boolean facingRight,
 					hasVision,
@@ -43,8 +46,9 @@ public class Player extends GameObject{
 		setAcceleration(GRAVITY);
 		health = MAXHEALTH;
 		facingRight = true;
-		//instantiate projectile
-		projectile = new Projectile(new Sprite("assets/img/platforms/platform4.png"), new Vector2(), this);
+		projectiles = new ArrayList<Projectile>();
+		numFramesElapsed = 30;
+		numFramesToFire = 30;
 		this.key = key;
 		this.mouse = mouse;
 		this.onGround = false;
@@ -58,14 +62,19 @@ public class Player extends GameObject{
 				die();
 			}
 		}
+		if (numFramesElapsed != numFramesToFire) numFramesElapsed++;
 		if (getVelocity().x > 0 && !facingRight){
 			turnRight();
 		} else if (getVelocity().x < 0 && facingRight){
 			turnLeft();
 		}
-
-		
-		//State machine!
+		for (int x = 0; x < projectiles.size(); x++){
+			if (projectiles.get(x).isAirborne()){
+				projectiles.get(x).Update(gameTime);
+			} else {
+				projectiles.remove(x);
+			}
+		}
 		switch(currentState) {
 		case IDLE:
 			idleUpdate(gameTime, platforms);
@@ -166,10 +175,13 @@ public class Player extends GameObject{
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos){
 		
 		super.Draw(g, gameTime, camPos);
-		/*if (projectile.isAirborne()){
-			projectile.Update(gameTime);
+		for (Projectile projectile : projectiles){
+			if (projectile.isAirborne()){
+				projectile.Draw(g, gameTime, camPos);
+			}
 		}
-		//account for facing left, right
+		/*
+		 * account for facing left, right
 		if (!facingRight && hasVision){
 			sword.Draw(
 					g, 
@@ -234,10 +246,13 @@ public class Player extends GameObject{
 	}
 	
 	private void attack() {
-		if(currentState != ATTACKING) {
+		if(numFramesElapsed == numFramesToFire && currentState != ATTACKING) {
+			numFramesElapsed = 0;
 			velocity = Vector2.Zero();
 			currentState = ATTACKING;
-			projectile.setDestination(new Vector2(position.x+1000, position.y));
+			Projectile p = new Projectile(new Sprite("assets/img/projectiles/test.png"), new Vector2(), this);
+			p.setDestination(position, facingRight);
+			projectiles.add(p);
 		}
 	}
 	
@@ -245,7 +260,7 @@ public class Player extends GameObject{
 		GameRectangle rect = getRekt();
 		int code = go.getRekt().intersects(rect);
 		//TODO: Check logic of these ifs (they don't actually use code)
-		if (go instanceof Projectile && go != projectile){
+		if (go instanceof Projectile && !projectiles.contains(go)){
 			takeDamage(1);
 		} else if (go instanceof DeadEnemy && ((DeadEnemy)go).isAttacking()){
 			if (hasVision){

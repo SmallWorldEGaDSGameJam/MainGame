@@ -11,23 +11,36 @@ public class Projectile extends GameObject{
 	
 	private Vector2 destination;
 	
+	private int numFramesToMove,
+				numFramesElapsed;
+	
 	public Projectile(Sprite sprite, Vector2 initialPos, GameObject source) {
 		super(sprite, initialPos);
 		this.source = source;
 		destination = initialPos;
+		numFramesToMove = 1;
 	}
 
 	@Override
 	public void Update(GameTime gameTime){
-		super.Update(gameTime);
+		if (numFramesElapsed++ >= numFramesToMove){
+			numFramesElapsed = 0;
+			super.Update(gameTime);
+		}
 		if (position.equals(destination)){
 			velocity = Vector2.Zero();
 		}
 	}
 	
-	public void setDestination(Vector2 destination){
-		this.destination = destination;
-		velocity = position.subtract(destination).normalize();
+	public void setDestination(Vector2 source, boolean facingRight){
+		position = source;
+		if (facingRight){
+			destination = new Vector2(source.x + 100, source.y);
+			velocity = destination.subtract(source).normalize().multiply(5);
+		} else {
+			destination = new Vector2(source.x - 100, source.y);
+			velocity = destination.subtract(source).normalize();
+		}
 	}
 	
 	public boolean isAirborne(){

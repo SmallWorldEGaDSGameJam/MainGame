@@ -1,5 +1,6 @@
 package MainGame.GameStates;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -8,8 +9,8 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
-import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineEvent.Type;
+import javax.sound.sampled.LineListener;
 
 import AppletSource.GameTime;
 import AppletSource.Input.KeyboardState;

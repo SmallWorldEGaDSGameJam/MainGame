@@ -62,7 +62,7 @@ public class LiveEnemy extends GameObject{
 			
 			
 			if (isAttacking() && millPerShotElapsed >= millPerShotWait){
-				projectile.setDestination(player.getPosition());
+				projectile.setDestination(player.getPosition(), facingRight);
 				millPerShotElapsed = 0;
 				currentState = IDLE; //reset to idle to reevaluate if you can fire a shot again
 			} else {
