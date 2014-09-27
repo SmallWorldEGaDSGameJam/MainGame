@@ -13,8 +13,9 @@ import AppletSource.Utilities.Vector2;
 
 public class Menu extends GameState{
 	//private Graphics2D menu;
-	boolean menuOpen;
-	boolean countingDown;
+	private boolean menuOpen;
+	private boolean countingDown;
+	private boolean p;
 	
 	public Menu(MouseState mouse, KeyboardState key, Vector2 camPos) {
 		super(mouse, key, camPos);
@@ -24,7 +25,6 @@ public class Menu extends GameState{
 
 	@Override
 	public void Update(GameTime gameTime) {
-		boolean p = key.isButtonTapped(KeyEvent.VK_P);
 		if (countingDown && gameTime.getElapsedGameTime()>=20000) {
 			countingDown=false;
 		}
@@ -70,6 +70,9 @@ public class Menu extends GameState{
 	}
 
 	public boolean isOpen(){ return menuOpen; }
-	public void open(){ menuOpen = true; }
+	public void open(){ 
+		menuOpen = true; 
+		p = true;
+	}
 	
 }
