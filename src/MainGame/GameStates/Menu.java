@@ -46,6 +46,7 @@ public class Menu extends GameState{
 			g.drawRect(555, 20, 20, 20);
 			g.drawRect(515, 45, 20, 20);
 			g.drawRect(562, 45, 20, 20);
+			g.drawRect(515, 70, 80, 20);
 			g.setColor(Color.WHITE);
 			Font f = new Font("serif", Font.PLAIN, 24);
 			g.setFont(f);
@@ -53,6 +54,7 @@ public class Menu extends GameState{
 			g.drawString("E - Ghost Vision", 557, 38);
 			g.drawString("Left - A", 455, 63);
 			g.drawString("D - Right", 562, 63);
+			g.drawString("Attack -  Space", 435, 88);
 			g.setColor(Color.BLACK);
 			f = new Font("serif", Font.PLAIN, 30);
 			g.setFont(f);
