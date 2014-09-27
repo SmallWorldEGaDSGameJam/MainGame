@@ -15,6 +15,8 @@ public class LiveEnemy extends GameObject{
 							ATTACKING = 1,
 							DYING = 2;
 	
+	private Projectile projectile;
+	
 	private int health;
 	
 	//how long to wait in between each shot while active.
@@ -28,6 +30,7 @@ public class LiveEnemy extends GameObject{
 	
 	public LiveEnemy(Sprite sprite, Vector2 initialPos) {
 		super(sprite, initialPos);
+		projectile = new Projectile(sprite /*put real sprite later*/, initialPos);
 		health = MAXHEALTH;
 		numFramesPerShotElapsed = 0;
 		numFramesPerShotElapsed = 120; //2 seconds at 60fps
@@ -47,13 +50,16 @@ public class LiveEnemy extends GameObject{
 		if (!dead){
 			Vector2 diff = position.subtract(player.getPosition()).normalize();
 			if (isAttacking() && numFramesPerShotElapsed++ == numFramesPerShotWait){
-				//set projectile speed to diff.normalize().multiply(2?);
+				projectile.setDestination(player.getPosition());
 				numFramesPerShotElapsed = 0;
 				currentState = IDLE; //reset to idle to reevaluate if you can fire a shot again
 			} else {
 				double distance = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
 				double ratio = Math.abs(diff.y / diff.x);
 				//when ratio is greater than 1 that means the absolute value of the y is greater than the absolute value of the x. we can change this later.
+				if (projectile.isAirborne()){
+					projectile.Update(gameTime);
+				}
 				if (ratio > 1 && distance < 1000 /*value subject to change*/){
 					currentState = ATTACKING;
 					numFramesPerShotElapsed = 0;
@@ -69,6 +75,9 @@ public class LiveEnemy extends GameObject{
 			visionSprite.Draw(g, gameTime, position, camPos);
 		} else {
 			sprite.Draw(g, gameTime, position, camPos);
+		}
+		if (projectile.isAirborne()){
+			projectile.Update(gameTime);
 		}
 	}
 

@@ -28,6 +28,8 @@ public class Player extends GameObject{
 	
 	private Sprite sword; 
 	
+	private Projectile projectile;
+	
 	private int health;
 	
 	private boolean facingRight,
@@ -42,7 +44,7 @@ public class Player extends GameObject{
 		//setAcceleration(GRAVITY);
 		health = MAXHEALTH;
 		facingRight = true;
-		
+		//instantiate projectile
 		this.key = key;
 		this.mouse = mouse;
 	}
@@ -64,6 +66,9 @@ public class Player extends GameObject{
 		}
 		//Keyboard update
 		if (!dead){
+			if (projectile.isAirborne()){
+				projectile.Update(gameTime);
+			}
 			if(key.isButtonDown(KeyEvent.VK_W)) {
 				if(currentState != ATTACKING) {
 					jump();
@@ -79,8 +84,11 @@ public class Player extends GameObject{
 	@Override
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos){
 		super.Draw(g, gameTime, camPos);
+		if (projectile.isAirborne()){
+			projectile.Update(gameTime);
+		}
 		//account for facing left, right
-		/*if (!facingRight){
+		/*if (!facingRight && hasVision){
 			sword.Draw(
 					g, 
 					gameTime, 
@@ -104,14 +112,14 @@ public class Player extends GameObject{
 	public void turnRight(){
 		if (currentState != ATTACKING){
 			facingRight = true;
-			velocity = getVelocity().add(WALKSPEED);
+			velocity = WALKSPEED;
 		}
 	}
 	
 	public void turnLeft(){
 		if (currentState != ATTACKING){
 			facingRight = false;
-			velocity = getVelocity().add(WALKSPEED.multiply(-1));
+			velocity = WALKSPEED.multiply(-1);
 		}
 	}
 	
@@ -120,7 +128,7 @@ public class Player extends GameObject{
 	}
 	
 	public void jump(){
-		if (currentState != ATTACKING){
+		if (currentState != ATTACKING && currentState != JUMPING){
 			velocity = getVelocity().add(JUMPVECTOR);
 		}
 	}
