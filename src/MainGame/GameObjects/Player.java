@@ -64,7 +64,7 @@ public class Player extends GameObject{
 			turnLeft();
 		}
 
-
+		
 		//State machine!
 		switch(currentState) {
 		case IDLE:
@@ -237,8 +237,7 @@ public class Player extends GameObject{
 		if(currentState != ATTACKING) {
 			velocity = Vector2.Zero();
 			currentState = ATTACKING;
-			//restart animations accordingly
-			//start projectile/sword/whatever
+			projectile.setDestination(new Vector2(position.x+1000, position.y));
 		}
 	}
 	

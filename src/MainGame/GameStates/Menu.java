@@ -12,7 +12,6 @@ import AppletSource.Utilities.GameState;
 import AppletSource.Utilities.Vector2;
 
 public class Menu extends GameState{
-	//private Graphics2D menu;
 	private boolean menuOpen;
 	private boolean countingDown;
 	private boolean p;
@@ -49,7 +48,6 @@ public class Menu extends GameState{
 			g.drawRect(562, 45, 20, 20);
 			g.setColor(Color.WHITE);
 			Font f = new Font("serif", Font.PLAIN, 24);
-			//Rectangle2D r = f.getStringBounds("Potato", null);
 			g.setFont(f);
 			g.drawString("Jump - W", 458, 38);
 			g.drawString("E - Ghost Vision", 557, 38);
@@ -58,15 +56,13 @@ public class Menu extends GameState{
 			g.setColor(Color.BLACK);
 			f = new Font("serif", Font.PLAIN, 30);
 			g.setFont(f);
-			g.drawString("Weapons:\n\tCrossbow is used to fight live enemies.\n\t"
-					+ "Phantom Sword is used to fight ghosts.", 25, 200);
-			g.drawString("Ghost Vision: Allows you to see ghosts of fallen enemies.", 25, 250);
-			g.drawString("To fight them, press E to change your vision." , 200, 300);
-			g.drawString("Your weapon changes from the crossbow to the phantom sword.", 200, 350);
+			g.drawString("Weapons:\n\tCrossbow is used to fight live enemies.", 25, 200);
+			g.drawString("Phantom Sword is used to fight ghosts.", 160, 250);
+			g.drawString("Ghost Vision: Allows you to see ghosts of fallen enemies.", 25, 300);
+			g.drawString("To fight them, press E to change your vision." , 200, 350);
+			g.drawString("Your weapon changes from the crossbow to the phantom sword.", 200, 400);
 			g.setColor(Color.CYAN);
-			g.drawString("Press P to unpause.", 400, 500);
-			//g.drawString("Press Q to quit.", 535, 325);
-			//menu = g;
+			g.drawString("Press P to unpause.", 450, 500);
 		}
 	}
 
