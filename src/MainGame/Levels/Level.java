@@ -1,5 +1,7 @@
 package MainGame.Levels;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
@@ -64,5 +66,13 @@ public class Level {
 		
 		for(Enemy e : enemy)
 			e.Draw(g, camPos, gameTime);
+		
+		g.setFont(new Font("serif", Font.PLAIN, 24));
+		g.setColor(new Color(128, 0, 0));
+		g.drawString("Press P to pause", 25, 25);
+		
+		g.setColor(Color.BLACK);
+		g.drawString("1. Find Key", 25, 50);
+		g.drawString("2. Open door after killing enemies", 25, 75);
 	}
 }

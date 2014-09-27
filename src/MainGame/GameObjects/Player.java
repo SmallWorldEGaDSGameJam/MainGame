@@ -166,8 +166,6 @@ public class Player extends GameObject{
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos){
 		
 		super.Draw(g, gameTime, camPos);
-		
-		g.drawString("velocity: " + velocity, 20, 20);
 		/*if (projectile.isAirborne()){
 			projectile.Update(gameTime);
 		}

@@ -32,14 +32,8 @@ public class Game extends AppletCore {
 
 	@Override
 	public void Update(GameTime gameTime) {
-		if (key.isButtonTapped(KeyEvent.VK_P)){
-			menu.open();
-		}
-		if (menu.isOpen()){
-			menu.Update(gameTime);
-		} else {
-			levelGameState.Update(gameTime);
-		}
+		menu.Update(gameTime);
+		if (!menu.isOpen()) levelGameState.Update(gameTime);
 	}
 	
 	@Override
@@ -48,8 +42,11 @@ public class Game extends AppletCore {
 		int w = getWidth(), h = getHeight();
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(Color.BLACK);
-		levelGameState.Draw(gameTime, g);
-		menu.Draw(gameTime, g);
+		if (menu.isOpen()){
+			menu.Draw(gameTime, g);
+		} else {
+			levelGameState.Draw(gameTime, g);
+		}
 	}
 
 }
