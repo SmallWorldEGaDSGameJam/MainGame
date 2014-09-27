@@ -27,27 +27,9 @@ public class LevelGameState extends GameState {
 	@Override
 	public void Update(GameTime gameTime) {
 		level.Update(gameTime);
-		
-		boolean left = key.isButtonDown(KeyEvent.VK_LEFT);
-		boolean right = key.isButtonDown(KeyEvent.VK_RIGHT);
-		boolean up = key.isButtonDown(KeyEvent.VK_UP);
-		boolean down = key.isButtonDown(KeyEvent.VK_DOWN);
-		
-		if(left != right) {
-			if(left)
-				camPos.x -= 3;
-			else
-				camPos.x += 3;
-		}
-		
-		if(up != down) {
-			if(up)
-				camPos.y -= 3;
-			else
-				camPos.y += 3;
-		}
-		
 		player.Update(gameTime, level.getPlatforms());
+		
+		camPos = new Vector2(player.getX() - 1080/2, player.getY() - 720/2);
 	}
 
 	@Override
