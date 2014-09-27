@@ -20,7 +20,7 @@ public class Enemy{
 	public Enemy(Sprite liveEnemySprite, Vector2 liveEnemyPos, Sprite deadEnemySprite, Vector2 deadEnemyPos){
 		liveEnemy = new LiveEnemy(liveEnemySprite, liveEnemyPos);
 		deadEnemy = new DeadEnemy(deadEnemySprite, deadEnemyPos);
-		numFramesWait = 5000; //5 seconds
+		numFramesWait = 300; //5 seconds at 60 fps
 	}
 	
 	public void Update(GameTime gameTime, Player player){

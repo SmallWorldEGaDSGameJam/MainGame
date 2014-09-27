@@ -178,6 +178,13 @@ public class Vector2
 	 */
 	public static Vector2 Zero(){return new Vector2();}
 	
+	@Override
+	public boolean equals(Object obj){
+		return obj instanceof Vector2 ? 
+				this.x == ((Vector2)obj).x && this.y == ((Vector2)obj).y :
+				false;
+	}
+	
 	/**
 	 * Returns the values of x and y in the following format:<br />
 	 * <code>(x, y)</code>

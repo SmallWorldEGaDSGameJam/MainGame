@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import AppletSource.GameTime;
 import AppletSource.Utilities.Sprite;
 import AppletSource.Utilities.Vector2;
-import MainGame.Platform;;
+import MainGame.GameObjects.Platform;
 
 public class Level {
 	protected ArrayList<Platform> platforms;

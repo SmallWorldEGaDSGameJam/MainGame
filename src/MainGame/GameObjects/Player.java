@@ -11,7 +11,6 @@ import AppletSource.Utilities.GameObject;
 import AppletSource.Utilities.GameRectangle;
 import AppletSource.Utilities.Sprite;
 import AppletSource.Utilities.Vector2;
-import MainGame.Platform;
 
 public class Player extends GameObject{
 
@@ -27,8 +26,6 @@ public class Player extends GameObject{
 					    ATTACKING = 3,
 					    DYING = 4;
 	
-	private GameRectangle hitbox;
-	
 	private Sprite sword; 
 	
 	private int health;
@@ -43,7 +40,6 @@ public class Player extends GameObject{
 	public Player(Sprite sprite, Vector2 initialPos, KeyboardState key, MouseState mouse) {
 		super(sprite, initialPos);
 		//setAcceleration(GRAVITY);
-		hitbox = new GameRectangle(getX(), getY(), getWidth(), getHeight());
 		health = MAXHEALTH;
 		facingRight = true;
 		
@@ -66,7 +62,6 @@ public class Player extends GameObject{
 		} else if (getVelocity().x < 0 && facingRight){
 			turnLeft();
 		}
-		
 		//Keyboard update
 		if (!dead){
 			if(key.isButtonDown(KeyEvent.VK_W)) {
@@ -109,14 +104,14 @@ public class Player extends GameObject{
 	public void turnRight(){
 		if (currentState != ATTACKING){
 			facingRight = true;
-			getVelocity().add(WALKSPEED);
+			velocity = getVelocity().add(WALKSPEED);
 		}
 	}
 	
 	public void turnLeft(){
 		if (currentState != ATTACKING){
 			facingRight = false;
-			getVelocity().add(WALKSPEED.multiply(-1));
+			velocity = getVelocity().add(WALKSPEED.multiply(-1));
 		}
 	}
 	
@@ -126,7 +121,7 @@ public class Player extends GameObject{
 	
 	public void jump(){
 		if (currentState != ATTACKING){
-			getVelocity().add(JUMPVECTOR);
+			velocity = getVelocity().add(JUMPVECTOR);
 		}
 	}
 	

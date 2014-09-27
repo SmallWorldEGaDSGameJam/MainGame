@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 
 import AppletSource.GameTime;
 import AppletSource.Utilities.GameObject;
-import AppletSource.Utilities.GameRectangle;
 import AppletSource.Utilities.Sprite;
 import AppletSource.Utilities.Vector2;
 
@@ -18,7 +17,9 @@ public class LiveEnemy extends GameObject{
 	
 	private int health;
 	
-	private GameRectangle hitbox;
+	//how long to wait in between each shot while active.
+	private int numFramesPerShotWait, 
+				numFramesPerShotElapsed;
 	
 	private Sprite visionSprite;
 	
@@ -27,8 +28,9 @@ public class LiveEnemy extends GameObject{
 	
 	public LiveEnemy(Sprite sprite, Vector2 initialPos) {
 		super(sprite, initialPos);
-		hitbox = new GameRectangle(initialPos.x, initialPos.y, sprite.getWidth(), sprite.getHeight());
 		health = MAXHEALTH;
+		numFramesPerShotElapsed = 0;
+		numFramesPerShotElapsed = 120; //2 seconds at 60fps
 		//instantiate visionSprites
 	}
 	
@@ -44,12 +46,20 @@ public class LiveEnemy extends GameObject{
 		}
 		if (!dead){
 			Vector2 diff = position.subtract(player.getPosition()).normalize();
-			double distance = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
-			double ratio = Math.abs(diff.y / diff.x);
-			if (ratio > 1 && distance < 1000 /*value subject to change*/){
-				currentState = ATTACKING;
+			if (isAttacking() && numFramesPerShotElapsed++ == numFramesPerShotWait){
+				//set projectile speed to diff.normalize().multiply(2?);
+				numFramesPerShotElapsed = 0;
+				currentState = IDLE; //reset to idle to reevaluate if you can fire a shot again
 			} else {
-				currentState = IDLE;
+				double distance = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
+				double ratio = Math.abs(diff.y / diff.x);
+				//when ratio is greater than 1 that means the absolute value of the y is greater than the absolute value of the x. we can change this later.
+				if (ratio > 1 && distance < 1000 /*value subject to change*/){
+					currentState = ATTACKING;
+					numFramesPerShotElapsed = 0;
+				} else {
+					currentState = IDLE;
+				}
 			}
 		}
 	}
@@ -62,16 +72,11 @@ public class LiveEnemy extends GameObject{
 		}
 	}
 
-	public void takeDamage(int damage){
-		health -= damage;
-	}
+	public void takeDamage(int damage){ health -= damage; }
 	
-	public boolean isDead(){
-		return dead;
-	}
+	public boolean isDead(){ return dead; }
+	public boolean isAttacking(){ return currentState == ATTACKING; }
 	
-	public void die(){
-		dead = true;
-	}
+	public void die(){ dead = true; }
 	
 }

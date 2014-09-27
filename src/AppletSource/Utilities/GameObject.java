@@ -1,6 +1,7 @@
 package AppletSource.Utilities;
 
 import java.awt.Graphics2D;
+
 import AppletSource.GameTime;
 
 public class GameObject
@@ -11,6 +12,8 @@ public class GameObject
 	protected Vector2 acceleration;
 	
 	protected Sprite sprite;
+	
+	protected GameRectangle rect;
 	
 	protected int currentState;
 	
@@ -27,7 +30,7 @@ public class GameObject
 		this.acceleration = Vector2.Zero();
 		this.scale = new Vector2(1, 1);
 		this.sprite = sprite;
-		
+		this.rect = new GameRectangle(initialPos.x, initialPos.y, sprite.getWidth(), sprite.getHeight());
 	}
 	
 	public void Update(GameTime gameTime)

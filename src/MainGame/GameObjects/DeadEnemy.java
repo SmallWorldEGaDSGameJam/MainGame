@@ -19,8 +19,6 @@ public class DeadEnemy extends GameObject{
 	
 	private int health;
 	
-	private GameRectangle hitbox;
-	
 	private Sprite sword;
 	
 	private boolean facingRight,
@@ -28,7 +26,6 @@ public class DeadEnemy extends GameObject{
 
 	public DeadEnemy(Sprite sprite, Vector2 initialPos){
 		super(sprite, initialPos);
-		hitbox = new GameRectangle(initialPos.x, initialPos.y, sprite.getWidth(), sprite.getHeight());
 		health = MAXHEALTH;
 		//instantiate sword
 	}
@@ -43,12 +40,16 @@ public class DeadEnemy extends GameObject{
 			}
 		}
 		if (!dead){
-			Vector2 diff = position.subtract(player.getPosition()).normalize();
-			double distance = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
-			if (distance < 100 /*value subject to change */ && diff.y == 0){
-				currentState = ATTACKING;
+			Vector2 diff = position.subtract(player.getPosition());
+			if (isAttacking()){
+				//attacking animation stuff?
 			} else {
-				position.add(diff);
+				double distance = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
+				if (distance < 100 /*value subject to change */ && diff.y == 0){
+					currentState = ATTACKING;
+				} else {
+					position.add(diff.normalize());
+				}
 			}
 		}
 	}
@@ -74,16 +75,11 @@ public class DeadEnemy extends GameObject{
 		}
 	}
 
-	public void takeDamage(int damage){
-		health -= damage;
-	}
+	public void takeDamage(int damage){ health -= damage; }
 	
-	public boolean isDead(){
-		return dead;
-	}
+	public boolean isDead(){ return dead; }
+	public boolean isAttacking(){ return currentState == ATTACKING; }
 	
-	public void die(){
-		dead = true;
-	}
+	public void die(){ dead = true; }
 	
 }
