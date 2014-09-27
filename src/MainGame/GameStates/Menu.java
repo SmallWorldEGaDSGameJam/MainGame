@@ -70,5 +70,6 @@ public class Menu extends GameState{
 	}
 
 	public boolean isOpen(){ return menuOpen; }
+	public void open(){ menuOpen = true; }
 	
 }
