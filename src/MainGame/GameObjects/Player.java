@@ -139,7 +139,16 @@ public class Player extends GameObject{
 
 	private void jumpUpdate(GameTime gameTime, ArrayList<Platform> platforms)
 	{
-		//I know! Wait for collision!
+		boolean left = key.isButtonDown(KeyEvent.VK_A);
+		boolean right = key.isButtonDown(KeyEvent.VK_D);
+		
+		if(left == right)
+			velocity.x = 0;
+		else if(right)
+			turnRight();
+		else if(left)
+			turnLeft();
+		
 		groundStop(gameTime, platforms);
 	}
 	
@@ -211,7 +220,7 @@ public class Player extends GameObject{
 	
 	private void jump() {
 		if (currentState != ATTACKING){
-			velocity = velocity.add(JUMPVECTOR);
+			velocity.y = JUMPVECTOR.y;
 			currentState = JUMPING;
 			//restart animations accordingly
 		}
