@@ -7,7 +7,6 @@ import AppletSource.GameTime;
 
 public class GameObject
 {
-	protected Point size;
 	protected Vector2 scale;
 	protected Vector2 position;
 	protected Vector2 velocity;
@@ -39,9 +38,14 @@ public class GameObject
 	
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos)
 	{
-		sprite.Draw(g, gameTime, position.substract(camPos), scale);
+		sprite.Draw(g, gameTime, position.subtract(camPos), scale);
 	}
-
+	
+	public double getX(){ return position.x; }
+	public double getY(){ return position.y; }
+	public int getWidth(){ return sprite.getWidth(); }
+	public int getHeight(){ return sprite.getHeight(); }
+	
 	/**
 	 * @return the scale
 	 */

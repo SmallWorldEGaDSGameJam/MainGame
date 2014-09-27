@@ -1,13 +1,17 @@
 package MainGame.GameObjects;
 
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import AppletSource.GameTime;
 import AppletSource.Input.KeyboardState;
 import AppletSource.Input.MouseState;
 import AppletSource.Utilities.GameObject;
+import AppletSource.Utilities.GameRectangle;
 import AppletSource.Utilities.Sprite;
 import AppletSource.Utilities.Vector2;
+import MainGame.Platform;
 
 public class Player extends GameObject{
 
@@ -23,6 +27,10 @@ public class Player extends GameObject{
 					    ATTACKING = 3,
 					    DYING = 4;
 	
+	private GameRectangle hitbox;
+	
+	private Sprite sword; 
+	
 	private int health;
 	
 	private boolean facingRight,
@@ -36,6 +44,7 @@ public class Player extends GameObject{
 	public Player(Sprite sprite, Vector2 initialPos, KeyboardState key, MouseState mouse) {
 		super(sprite, initialPos);
 		setAcceleration(GRAVITY);
+		hitbox = new GameRectangle(getX(), getY(), getWidth(), getHeight());
 		health = MAXHEALTH;
 		facingRight = true;
 		
@@ -43,8 +52,7 @@ public class Player extends GameObject{
 		this.mouse = mouse;
 	}
 	
-	@Override
-	public void Update(GameTime gameTime){
+	public void Update(GameTime gameTime, ArrayList<Platform> platforms){
 		super.Update(gameTime);
 		if (health > MAXHEALTH) health = MAXHEALTH;
 		if (health <= 0) {
@@ -72,6 +80,23 @@ public class Player extends GameObject{
 				turnRight();
 			}
 		}
+	}
+	
+	@Override
+	public void Draw(Graphics2D g, GameTime gameTime, Vector2 camPos){
+		super.Draw(g, gameTime, camPos);
+		if (facingRight){
+			sword.Draw(
+					g, 
+					gameTime, 
+					position.subtract(new Vector2(sword.getWidth(), 0)).subtract(camPos), 
+					scale
+					);
+		}
+	}
+	
+	public void takeDamage(int damage){
+		health -= damage;
 	}
 	
 	public void turnRight(){

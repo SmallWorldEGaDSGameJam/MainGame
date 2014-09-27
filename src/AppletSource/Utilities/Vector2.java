@@ -108,7 +108,7 @@ public class Vector2
 	 * @return A new vector2 formed by the substraction of the x's and y's of this vector2
 	 * and a <code>(this - a)</code> or <code>(this.x - a.x, this.y - a.y)</code>
 	 */
-	public Vector2 substract(Vector2 a)
+	public Vector2 subtract(Vector2 a)
 	{
 		return new Vector2(x - a.x, y - a.y);
 	}
