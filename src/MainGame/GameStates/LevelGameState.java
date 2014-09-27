@@ -1,7 +1,10 @@
 package MainGame.GameStates;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import AppletSource.GameTime;
@@ -31,6 +34,27 @@ public class LevelGameState extends GameState {
 	@Override
 	public void Update(GameTime gameTime) {
 		level.Update(gameTime);
+		
+		boolean left = key.isButtonDown(KeyEvent.VK_LEFT);
+		boolean right = key.isButtonDown(KeyEvent.VK_RIGHT);
+		boolean up = key.isButtonDown(KeyEvent.VK_UP);
+		boolean down = key.isButtonDown(KeyEvent.VK_DOWN);
+		
+		if(left != right) {
+			if(left)
+				camPos.x -= 3;
+			else
+				camPos.x += 3;
+		}
+		
+		if(up != down) {
+			if(up)
+				camPos.y -= 3;
+			else
+				camPos.y += 3;
+		}
+		
+		
 		//player.Update(gameTime);
 	}
 

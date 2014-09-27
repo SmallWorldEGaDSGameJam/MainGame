@@ -21,6 +21,7 @@ public class Level {
 	{
 		this.platforms = platforms;
 		this.spawn = spawn;
+		
 	}
 	
 	public void Update(GameTime gameTime)

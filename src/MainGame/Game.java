@@ -3,11 +3,17 @@ import java.awt.Graphics2D;
 
 import AppletSource.AppletCore;
 import AppletSource.GameTime;
+import AppletSource.Input.KeyboardState;
+import AppletSource.Input.MouseState;
 import AppletSource.Utilities.Vector2;
 import MainGame.GameStates.LevelGameState;
 
 public class Game extends AppletCore {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8927600578014031512L;
 	LevelGameState levelGameState;
 	
 	@Override

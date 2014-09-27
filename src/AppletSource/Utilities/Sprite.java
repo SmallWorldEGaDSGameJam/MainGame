@@ -45,8 +45,9 @@ public class Sprite {
 	
 	public void Draw(Graphics2D g, GameTime gameTime, Vector2 position, Vector2 scale)
 	{
+		//g.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer)
 		g.drawImage(image, (int)position.x, (int)position.y,
-				(int)(position.x + frameSize.x * scale.x), (int)(position.x + frameSize.y * scale.y),
+				(int)(position.x + frameSize.x * scale.x), (int)(position.y + frameSize.y * scale.y),
 				(int)(frameSize.x * currentFrame.x), (int)(frameSize.y * currentFrame.y),
 				(int)(frameSize.x * currentFrame.x + frameSize.x),  
 				(int)(frameSize.y * currentFrame.y + frameSize.y), null);

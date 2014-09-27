@@ -125,15 +125,16 @@ public abstract class AppletCore extends Applet implements Runnable
 		resizeScreen();
 		screenSize = new Point(getWidth(), getHeight());
 		drawArea.setSize(new Dimension(getWidth(),getHeight()));
+		drawArea.setFocusable(true);
 		add(drawArea);
 		key = new KeyboardState(drawArea);
 		mouse = new MouseState(drawArea);
 		createBufferStrategy(2);
 		bufferStrategy = drawArea.getBufferStrategy();
 		
-		GameTime gameTime = new GameTime();
-		
 		LoadContent();
+		
+		GameTime gameTime = new GameTime();
 		
 		while(!stopped)
 		{
