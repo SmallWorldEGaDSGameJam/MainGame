@@ -20,5 +20,5 @@ public abstract class GameState {
 	}
 	
 	public abstract void Update(GameTime gameTime);
-	public abstract void Draw(Graphics2D g);
+	public abstract void Draw(GameTime gameTime, Graphics2D g);
 }

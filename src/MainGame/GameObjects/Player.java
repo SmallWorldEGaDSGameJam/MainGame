@@ -1,10 +1,10 @@
 package MainGame.GameObjects;
 
-import java.awt.Image;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 
 import AppletSource.GameTime;
+import AppletSource.Input.KeyboardState;
+import AppletSource.Input.MouseState;
 import AppletSource.Utilities.GameObject;
 import AppletSource.Utilities.Sprite;
 import AppletSource.Utilities.Vector2;
@@ -15,7 +15,7 @@ public class Player extends GameObject{
 	private static final Vector2 JUMPVECTOR = new Vector2(0, -10.0);
 	private static final Vector2 GRAVITY = new Vector2(0, 10.0);
 	
-	private static int MAXHEALTH = 10;
+	private static final int MAXHEALTH = 10;
 	
 	private static int IDLE = 0,
 					    WALKING = 1,
@@ -30,11 +30,17 @@ public class Player extends GameObject{
 					dead;
 	private int currentState;
 	
-	public Player(Sprite sprite, Vector2 initialPos) {
+	private KeyboardState key;
+	private MouseState mouse;
+	
+	public Player(Sprite sprite, Vector2 initialPos, KeyboardState key, MouseState mouse) {
 		super(sprite, initialPos);
 		setAcceleration(GRAVITY);
 		health = MAXHEALTH;
 		facingRight = true;
+		
+		this.key = key;
+		this.mouse = mouse;
 	}
 	
 	@Override
@@ -52,6 +58,19 @@ public class Player extends GameObject{
 			turnRight();
 		} else if (getVelocity().x < 0 && facingRight){
 			turnLeft();
+		}
+		
+		//Keyboard update
+		if (!dead){
+			if(key.isButtonDown(KeyEvent.VK_W)) {
+				if(currentState != ATTACKING) {
+					jump();
+				}
+			} else if(key.isButtonDown(KeyEvent.VK_A)) {
+				turnLeft();
+			} else if(key.isButtonDown(KeyEvent.VK_D)) {
+				turnRight();
+			}
 		}
 	}
 	
@@ -78,20 +97,4 @@ public class Player extends GameObject{
 			getVelocity().add(JUMPVECTOR);
 		}
 	}
-	
-	public void keyPressed(int k){
-		if (!dead){
-			switch(k){
-			case KeyEvent.VK_UP :
-				if (currentState != ATTACKING){
-					jump();
-				}
-			case KeyEvent.VK_LEFT : 
-				turnLeft();
-			case KeyEvent.VK_RIGHT :
-				turnRight();
-			}
-		}
-	}
-
 }

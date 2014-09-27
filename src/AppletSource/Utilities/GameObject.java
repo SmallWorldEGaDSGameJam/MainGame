@@ -1,10 +1,8 @@
 package AppletSource.Utilities;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 
-import AppletSource.AppletCore;
 import AppletSource.GameTime;
 
 public class GameObject

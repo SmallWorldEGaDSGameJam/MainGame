@@ -1,7 +1,5 @@
 package MainGame;
 
-import java.awt.Image;
-
 import AppletSource.Utilities.GameObject;
 import AppletSource.Utilities.GameRectangle;
 import AppletSource.Utilities.Sprite;
