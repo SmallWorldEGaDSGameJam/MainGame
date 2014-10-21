@@ -1,7 +1,6 @@
 package MainGame.GameStates;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -13,7 +12,6 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineEvent.Type;
 import javax.sound.sampled.LineListener;
 
-import AppletSource.AppletCore;
 import AppletSource.GameTime;
 import AppletSource.Input.KeyboardState;
 import AppletSource.Input.MouseState;
@@ -46,9 +44,6 @@ class AudioListener implements LineListener{
 }
 
 public class LevelGameState extends GameState {
-
-
-	private Sprite background;
 	private static Thread sound;
 	private static Clip clip;
 		
@@ -60,9 +55,8 @@ public class LevelGameState extends GameState {
 		
 		level = new Level();
 		player = new Player(new Sprite("assets/img/player/Rob.png", new Point(10, 1), 100), 
-				new Sprite("assets/img/player/walk.png", new Point(11, 1), 20), new Vector2(0, 2000), key, mouse);
+				new Sprite("assets/img/player/walk.png", new Point(11, 1), 20), new Vector2(0, 2800), key, mouse);
 		playSound("/assets/audio/music/background.wav");
-		background = new Sprite("assets/img/background/Background.png");
 	}
 
 	@Override
@@ -76,7 +70,6 @@ public class LevelGameState extends GameState {
 
 	@Override
 	public void Draw(GameTime gameTime, Graphics2D g) {
-		background.Draw(g, gameTime, new Vector2(), new Vector2(1, 1));
 		level.Draw(gameTime, g, camPos);
 		player.Draw(g, gameTime, camPos);
 	}
